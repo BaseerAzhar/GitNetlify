@@ -29,7 +29,8 @@
             resultDiv.style.display = "block"; // Show the result div
 
             // Send request to the serverless function (update this URL as needed)
-            fetch(`https://your-netlify-site-name.netlify.app/.netlify/functions/run-automation?test=${testName}`)
+           fetch(`https://your-netlify-site-name.netlify.app/.netlify/functions/run-automation?test=${testName}`)
+
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

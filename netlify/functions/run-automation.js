@@ -23,15 +23,45 @@ exports.handler = async (event, context) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ result })
+            body: JSON.stringify({ result }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',  // Allow all origins (you can restrict this to specific domains)
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
         };
 
     } catch (error) {
         console.error("Error:", error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Failed to run the test" })
+            body: JSON.stringify({ error: "Failed to run the test" }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',  // Allow all origins (you can restrict this to specific domains)
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
         };
+    }
+};
+exports.handler = async (event, context) => {
+    if (event.httpMethod === "OPTIONS") {
+        return {
+            statusCode: 204,  // No content
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
+        };
+    }
+
+    try {
+        // Existing code for handling the test request
+        // ...
+    } catch (error) {
+        // Error handling code
+        // ...
     }
 };
 
