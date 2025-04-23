@@ -24,78 +24,42 @@
 
         <div id="result" class="result"></div>
     </div>
-<script>
-    function runTest(testName) {
-        const resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = `Running ${testName}...`; // Initial message
-        resultDiv.classList.remove("success", "error");
-        resultDiv.style.display = "block"; // Show the result div
 
-        // Send request to the server
-        fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-automation.js`)
-            .then(response => {
-                if (!response.ok) {
-                    // Log the status text for debugging
-                    console.error('Response error:', response.statusText);
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Received response:", data); // Log the response for debugging
+    <script>
+        function runTest(testName) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `Running ${testName}...`; // Initial message
+            resultDiv.classList.remove("success", "error");
+            resultDiv.style.display = "block"; // Show the result div
 
-                // Check if there's a result or an error
-                if (data.result) {
-                    resultDiv.innerHTML = `<strong>Test Result:</strong><pre>${data.result}</pre>`;
-                    resultDiv.classList.add("success");
-                } else if (data.error) {
-                    resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+            // Send request to the server
+<!--            fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-automation`)-->
+           fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-test?test=${testName}`)
+
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Received response:", data); // Log the response for debugging
+
+                    // Check if there's a result or an error
+                    if (data.result) {
+                        resultDiv.innerHTML = `<strong>Test Result:</strong><pre>${data.result}</pre>`;
+                        resultDiv.classList.add("success");
+                    } else if (data.error) {
+                        resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                        resultDiv.classList.add("error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error occurred:", error); // Log the error
+                    resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
                     resultDiv.classList.add("error");
-                }
-            })
-            .catch(error => {
-                console.error("Error occurred:", error); // Log the error
-                resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
-                resultDiv.classList.add("error");
-            });
-    }
-</script>
-
-<!--    <script>-->
-<!--        function runTest(testName) {-->
-<!--            const resultDiv = document.getElementById("result");-->
-<!--            resultDiv.innerHTML = `Running ${testName}...`; // Initial message-->
-<!--            resultDiv.classList.remove("success", "error");-->
-<!--            resultDiv.style.display = "block"; // Show the result div-->
-
-<!--            // Send request to the server-->
-<!--            fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-automation.js`)-->
-
-<!--                .then(response => {-->
-<!--                    if (!response.ok) {-->
-<!--                        throw new Error('Network response was not ok');-->
-<!--                    }-->
-<!--                    return response.json();-->
-<!--                })-->
-<!--                .then(data => {-->
-<!--                    console.log("Received response:", data); // Log the response for debugging-->
-
-<!--                    // Check if there's a result or an error-->
-<!--                    if (data.result) {-->
-<!--                        resultDiv.innerHTML = `<strong>Test Result:</strong><pre>${data.result}</pre>`;-->
-<!--                        resultDiv.classList.add("success");-->
-<!--                    } else if (data.error) {-->
-<!--                        resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;-->
-<!--                        resultDiv.classList.add("error");-->
-<!--                    }-->
-<!--                })-->
-<!--                .catch(error => {-->
-<!--                    console.error("Error occurred:", error); // Log the error-->
-<!--                    resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;-->
-<!--                    resultDiv.classList.add("error");-->
-<!--                });-->
-<!--        }-->
-<!--    </script>-->
-
+                });
+        }
+    </script>
 </body>
 </html>
