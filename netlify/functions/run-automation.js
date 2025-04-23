@@ -14,6 +14,9 @@ exports.handler = async (event, context) => {
   if (!scriptPath) {
     return {
       statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // Allow all origins, or you can specify a single domain here
+      },
       body: JSON.stringify({ error: "Test not found" }),
     };
   }
@@ -23,11 +26,17 @@ exports.handler = async (event, context) => {
     const output = await runPythonScript(scriptPath);
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // Allow all origins, or you can specify a single domain here
+      },
       body: JSON.stringify({ result: output }),
     };
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // Allow all origins, or you can specify a single domain here
+      },
       body: JSON.stringify({ error: `Failed to run the test: ${error.message}` }),
     };
   }
