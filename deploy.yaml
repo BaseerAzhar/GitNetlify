@@ -1,0 +1,28 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow only when pushing to 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # This can be `windows-latest` or `macos-latest` if needed
+
+    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m venv env
+          source env/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install
+

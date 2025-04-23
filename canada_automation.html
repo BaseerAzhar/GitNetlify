@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canada Automation Test</title>
+    <style>
+        /* Same style from earlier, adjust as needed */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Canada Automation Test</h1>
+        <p>Click the button below to run the test.</p>
+        <button onclick="runTest('canada_automation')">Run Canada Automation Test</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function runTest(testName) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "Running " + testName + "...";
+            resultDiv.classList.remove("success", "error");
+            resultDiv.style.display = "block";
+
+            fetch(`/run-test?test=${testName}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        resultDiv.innerHTML = `<strong>${testName} Result:</strong><pre>${data.result}</pre>`;
+                        resultDiv.classList.add("success");
+                    } else {
+                        resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                        resultDiv.classList.add("error");
+                    }
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
+                    resultDiv.classList.add("error");
+                });
+        }
+    </script>
+</body>
+</html>

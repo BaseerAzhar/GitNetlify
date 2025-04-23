@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA Automation Test</title>
+    <style>
+        /* Add any styling you need here */
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>USA Automation Test</h1>
+        <p>Click the button below to run the test.</p>
+        <button onclick="runTest('usa_automation')">Run USA Automation Test</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function runTest(testName) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `Running ${testName}...`; // Initial message
+            resultDiv.classList.remove("success", "error");
+            resultDiv.style.display = "block"; // Show the result div
+
+            // Send request to the server
+            fetch(`/run-test?test=${testName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Received response:", data); // Log the response for debugging
+
+                    // Check if there's a result or an error
+                    if (data.result) {
+                        resultDiv.innerHTML = `<strong>Test Result:</strong><pre>${data.result}</pre>`;
+                        resultDiv.classList.add("success");
+                    } else if (data.error) {
+                        resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
+                        resultDiv.classList.add("error");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error occurred:", error); // Log the error
+                    resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
+                    resultDiv.classList.add("error");
+                });
+        }
+    </script>
+</body>
+</html>
