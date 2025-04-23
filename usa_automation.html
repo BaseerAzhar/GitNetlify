@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USA Automation Test</title>
+    <title>Run Test Example</title>
     <style>
-        /* Add any styling you need here */
         .success {
             color: green;
-            font-weight: bold;
         }
         .error {
             color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>USA Automation Test</h1>
-        <p>Click the button below to run the test.</p>
-        <button onclick="runTest('usa_automation')">Run USA Automation Test</button>
 
-        <div id="result" class="result"></div>
-    </div>
+    <!-- Button to run the test -->
+    <button id="runTestBtn" onclick="runTest('test_example')">Run Test</button>
+
+    <!-- Div to show the result -->
+    <div id="result" style="display:none;"></div>
 
     <script>
         function runTest(testName) {
@@ -32,10 +28,8 @@
             resultDiv.classList.remove("success", "error");
             resultDiv.style.display = "block"; // Show the result div
 
-            // Send request to the server
-<!--            fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-automation`)-->
-           fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-test?test=${testName}`)
-
+            // Send request to the serverless function (update this URL as needed)
+            fetch(`https://your-netlify-site-name.netlify.app/.netlify/functions/run-automation?test=${testName}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -43,7 +37,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Received response:", data); // Log the response for debugging
+                    console.log("Received response:", data);
 
                     // Check if there's a result or an error
                     if (data.result) {
@@ -55,11 +49,12 @@
                     }
                 })
                 .catch(error => {
-                    console.error("Error occurred:", error); // Log the error
+                    console.error("Error occurred:", error);
                     resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
                     resultDiv.classList.add("error");
                 });
         }
     </script>
+
 </body>
 </html>
