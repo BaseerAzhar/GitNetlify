@@ -1,7 +1,8 @@
 [build]
   publish = "public"
   functions = "functions"
-  command = "pip install -r requirements.txt && playwright install chromium && playwright install-deps"
+  command = "pip install -r requirements.txt"
+  cammand = "playwright install"
 
 [[redirects]]
   from = "/run-test"
