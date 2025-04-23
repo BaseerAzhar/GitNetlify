@@ -6,3 +6,11 @@
   from = "/run-test"
   to = "/.netlify/functions/run-automation"
   status = 200
+
+#[build]
+#  command = "pip install -r requirements.txt && playwright install && playwright install-deps"
+#  functions = "netlify/functions"
+#  publish = "."
+
+[[plugins]]
+  package = "@netlify/plugin-python"
