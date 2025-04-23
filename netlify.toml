@@ -19,7 +19,7 @@
 
 #[[plugins]]npm install -D @netlify/plugin-pythonython"
 
-[build]
-  publish = "public"
-  functions = "functions"
+#[build]
+#  publish = "public"
+#  functions = "functions"
 
