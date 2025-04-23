@@ -24,39 +24,37 @@
         <div id="result" class="result" style="display:none;"></div>
     </div>
 
-    <script>
-        function runTest(testName) {
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = `Running ${testName}...`; // Initial message
-            resultDiv.classList.remove("success", "error");
-            resultDiv.style.display = "block"; // Show the result div
+   <script>
+async function runTest() {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = 'Running test...';
 
-            // Send request to the serverless function
-            fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-test?test=usa_automation`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Received response:", data); // Log the response for debugging
+    try {
+        // Use relative path for the function
+        const response = await fetch('/.netlify/functions/run-playwright');
 
-                    // Check if there's a result or an error
-                    if (data.result) {
-                        resultDiv.innerHTML = `<strong>Test Result:</strong><pre>${data.result}</pre>`;
-                        resultDiv.classList.add("success");
-                    } else if (data.error) {
-                        resultDiv.innerHTML = `<strong>Error:</strong> ${data.error}`;
-                        resultDiv.classList.add("error");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error occurred:", error); // Log the error
-                    resultDiv.innerHTML = `<strong>Error:</strong> Could not run the test. Please try again later.`;
-                    resultDiv.classList.add("error");
-                });
+        // Check if response is HTML (common 404 fallback)
+        const contentType = response.headers.get('content-type');
+        if (contentType.includes('text/html')) {
+            throw new Error('Function not found - got HTML response');
         }
-    </script>
+
+        const data = await response.json();
+
+        if (response.ok) {
+            resultDiv.innerHTML = `Success! ${data.message}<br>Output: ${data.output}`;
+        } else {
+            resultDiv.innerHTML = `Error: ${data.error}<br>Details: ${data.stderr}`;
+        }
+    } catch (error) {
+        resultDiv.innerHTML = `Error: ${error.message}<br>
+            Possible issues:<br>
+            1. Function not deployed correctly<br>
+            2. Incorrect function path<br>
+            3. Missing netlify.toml configuration`;
+        console.error('Full error:', error);
+    }
+}
+</script>
 </body>
 </html>
