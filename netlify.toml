@@ -12,5 +12,4 @@
 #  functions = "netlify/functions"
 #  publish = "."
 
-[[plugins]]
-  package = "@netlify/plugin-python"
+#[[plugins]]npm install -D @netlify/plugin-pythonython"
