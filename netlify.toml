@@ -1,0 +1,3 @@
+[build]
+  image = "heroku/python"
+  functions = "netlify/functions"
