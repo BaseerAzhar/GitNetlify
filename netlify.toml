@@ -2,8 +2,6 @@
   publish = "public"
   functions = "functions"
   command = "pip install -r requirements.txt"
-  cammand = "playwright install"
-  command = "PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium"
 
 
 [build.environment]
