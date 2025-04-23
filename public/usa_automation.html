@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USA Automation Test</title>
     <style>
-        /* Add any styling you need here */
         .success {
             color: green;
             font-weight: bold;
@@ -22,7 +21,7 @@
         <p>Click the button below to run the test.</p>
         <button onclick="runTest('usa_automation')">Run USA Automation Test</button>
 
-        <div id="result" class="result"></div>
+        <div id="result" class="result" style="display:none;"></div>
     </div>
 
     <script>
@@ -32,10 +31,8 @@
             resultDiv.classList.remove("success", "error");
             resultDiv.style.display = "block"; // Show the result div
 
-            // Send request to the server
-<!--            fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-automation"`)-->
-           fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-test?test=${testName}`)
-
+            // Send request to the serverless function
+            fetch(`https://your-netlify-site-name.netlify.app/.netlify/functions/run-automation?test=${testName}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

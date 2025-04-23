@@ -2,7 +2,7 @@
 import time
 from playwright.sync_api import sync_playwright
 
-def test_open_chrome():
+def run_test():
     try:
         with sync_playwright() as p:
             print("Launching browser...")  # This is for debugging
@@ -15,4 +15,4 @@ def test_open_chrome():
         print(f"Test failed: {e}")
 
 # Run the test
-test_open_chrome()
+run_test()
