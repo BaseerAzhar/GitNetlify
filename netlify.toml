@@ -6,10 +6,10 @@
 [build.environment]
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "false"
 
-[[redirects]]
-  from = "/run-test"
-  to = "/.netlify/functions/run-automation"
-  status = 200
+#[[redirects]]
+#  from = "/run-test"
+#  to = "/.netlify/functions/run-automation"
+#  status = 200
 
 #[build]
 #  command = "pip install -r requirements.txt && playwright install && playwright install-deps"
