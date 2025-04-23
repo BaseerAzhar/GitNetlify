@@ -33,7 +33,7 @@
             resultDiv.style.display = "block"; // Show the result div
 
             // Send request to the server
-            fetch(`https://gitnetlifys.netlify.app/run-test?test=${testName}`)
+           fetch(`https://gitnetlifys.netlify.app/.netlify/functions/run-test?test=${testName}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
