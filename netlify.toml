@@ -1,12 +1,7 @@
 [build]
   publish = "public"
   functions = "functions"
-  command = "pip install -r requirements.txt && python -m venv env && source env/bin/activate"
-#  command = "python -m pip install --upgrade pip"
-#  command = "python -m playwright install"
-#  command = "pip install pytest-playwright"
-#  command = "playwright install"
-
+  command = "pip install -r requirements.txt && python -m venv env && source env/bin/activate && python -m pip install --upgrade pip && pip install pytest-playwright && pip install pytest-playwright"
 
 [build.environment]
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = "false"
