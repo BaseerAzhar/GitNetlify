@@ -24,7 +24,9 @@ jobs:
           source env/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Install playwright
+        run: |
           python -m playwright install
           pip install pytest-playwright
           playwright install
-
